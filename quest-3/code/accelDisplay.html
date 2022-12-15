@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Acceleration Display</title>
+<meta http-equiv="refresh" content="2">
+<script type="text/javascript" src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+<script type="text/javascript">
+    window.onload = function() {
+        var dataPointsX = [];
+        var dataPointsY = [];
+        var dataPointsZ = [];
+	 
+        function getDataPointsFromX(csv) {
+            var dataPointsX = csvLines = points = [];
+            csvLines = csv.split(/[\r?\n|\r|\n]+/);         
+		        
+            for (var i = 0; i < csvLines.length; i++)
+                if (csvLines[i].length > 0) {
+                    points = csvLines[i].split(",");
+                    dataPointsX.push({ 
+                        label: i, 
+                        y: parseFloat(points[1]),
+                    });
+                }
+            return dataPointsX;
+        }
+
+        function getDataPointsFromY(csv) {
+            var dataPointsY = csvLines = points = [];
+            csvLines = csv.split(/[\r?\n|\r|\n]+/);         
+		        
+            for (var i = 0; i < csvLines.length; i++)
+                if (csvLines[i].length > 0) {
+                    points = csvLines[i].split(",");
+                    dataPointsY.push({ 
+                        label: i, 
+                        y: parseFloat(points[2]),
+                    });
+                }
+            return dataPointsY;
+        }
+
+        function getDataPointsFromZ(csv) {
+            var dataPointZ = csvLines = points = [];
+            csvLines = csv.split(/[\r?\n|\r|\n]+/);         
+		        
+            for (var i = 0; i < csvLines.length; i++)
+                if (csvLines[i].length > 0) {
+                    points = csvLines[i].split(",");
+                    dataPointsZ.push({ 
+                        label: i, 
+                        y: parseFloat(points[3]),
+                    });
+                }
+            return dataPointsZ;
+        }
+	
+	$.get("http://localhost:3000/data.csv", function(data) {
+	    var chart = new CanvasJS.Chart("chartContainer", {
+            animationEnabled: true,
+		    title: {
+		         text: "Acceleration Chart (Radar)",
+		    },
+            axisX: {
+                title: "Rotation Angles/Degree",
+                includeZero: true
+            },
+            axisY: {
+                title: "Acceleration(m/s^2)",
+                includeZero: true,
+                suffix: "m/s^2"
+            },
+            toolTip: {
+                shared: true
+            },
+            legend: {
+                cursor:"pointer"
+            },
+            data: [{
+                type: "column",
+                name: "Acceleration on X-axis",
+                legendText: "Acceleration on X-axis",
+                showInLegend: true, 
+                dataPoints: getDataPointsFromY(data)
+            },
+            {
+                type: "column",
+                name: "Acceleration on Y-axis",
+                legendText: "Acceleration on Y-axis",
+                showInLegend: true, 
+                dataPoints: getDataPointsFromY(data)
+            },
+            {
+                type: "column",	
+                name: "Acceleration on Z-axis",
+                legendText: "Acceleration on Z-axis",
+                showInLegend: true,
+                dataPoints: getDataPointsFromZ(data)
+            }]
+	     });
+		
+	      chart.render();
+
+	});
+  }
+</script>
+</head>
+<body>
+	<div id="chartContainer" style="width:100%; height:300px;"></div>
+</body>
+</html>

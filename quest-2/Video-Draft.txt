@@ -1,0 +1,9 @@
+Qi: First, the user has to install the npm packages accordingly as we specified in the README file. Then, run "node read_data.js" in the public directory, this will use the serial port npm package to reads the data from esp32. The data is stored in the data.csv files. And then run "npm start" in the root directory. This will upload the data.csv files and the display.html files to the server. Then the HTML files can be accessed by http://localhost: followed by the [port] numbers, followed by a slash, and the HTML files' name. 
+
+One left side is the ladar, and the right side is the temperature chart. It refreshes every 2 seconds. For the ladar, it goes from one sample to 6 samples for every rotation. It is a degree vs. distance graph, and the distance is in meters. And for the temperature chart, it keeps the newest 20 samples. This will give the latest temperature in the last 40 seconds.
+
+I'll demonstrate that later.
+
+Bi: Our project is a simple implementation of a radar and a thermistor. This is our setup. It has a IR-sensor, ultrasonic sensor, and Lidar. Also, it is equipped with a temperature sensor. And those sensor is attached on top of a servo. The servo will drive the sensors from 0 to 180 and sample all the sensors 6 times during the movement. Eventually, the data obtained from the sensor is input to the console.
+
+Nan: 

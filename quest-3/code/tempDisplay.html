@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Temperature Display</title>
+<meta http-equiv="refresh" content="2">
+<script type="text/javascript" src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+<script type="text/javascript">
+    window.onload = function() {
+        var dataPoints = [];
+	 
+        function getDataPointsFromCSV(csv) {
+            var dataPoints = csvLines = points = [];
+            csvLines = csv.split(/[\r?\n|\r|\n]+/);         
+		        
+            for (var i = csvLines.length-1; i > 0; i--)
+                if (csvLines[i].length > 0) {
+                    points = csvLines[i].split(",");
+                    dataPoints.push({ 
+                        x: i, 
+                        y: parseFloat(points[0]),
+                    });
+                }
+            return dataPoints;
+        }
+	
+	$.get("http://localhost:3000/data.csv", function(data) {
+	    var chart = new CanvasJS.Chart("chartContainer", {
+            animationEnabled: true,
+		    title: {
+		         text: "Temperature Chart",
+		    },
+            axisX: {
+                title: "Time/s",
+                includeZero: true,
+                suffix: "s"
+            },
+            axisY: {
+                title: "Tempearture/C",
+                includeZero: true,
+                suffix: "C"
+            },
+		    data: [{
+		         type: "column",
+		         dataPoints: getDataPointsFromCSV(data)
+		      }]
+	     });
+		
+	      chart.render();
+
+	});
+  }
+</script>
+</head>
+<body>
+	<div id="chartContainer" style="width:100%; height:300px;"></div>
+</body>
+</html>

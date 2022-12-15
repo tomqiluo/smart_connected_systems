@@ -1,0 +1,9 @@
+Hi everyone, we are team three.
+
+Here is the demo for our final quest.
+
+As you can see, with one click the LEDs on the buggy is activated. Double click and the buggy will turn left. With three clicks, the buggy will turn right.
+
+Eventually, with 4 clicks, the buggy will do a trick. It will randomly go backward and forward. Just like dancing. We were inspired by tesla when we created this trick.
+
+This is our final quest, and I just want to thank everyone who has devoted their energy, patience, and hard work to this course. We really enjoyed it and learned a lot.
