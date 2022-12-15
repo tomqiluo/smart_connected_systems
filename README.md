@@ -1,0 +1,1 @@
+# smart_connected_systems
